@@ -530,7 +530,8 @@ class Net::LDAP::Connection #:nodoc:
   #++
   def modify(args)
     modify_dn = args[:dn] or raise "Unable to modify empty DN"
-    ops = self.class.modify_ops args[:operations]
+    operations = args[:operations] or raise ArgumentError.new("Missing operations array")
+    ops = self.class.modify_ops operations
 
     message_id = next_msgid
     request    = [
